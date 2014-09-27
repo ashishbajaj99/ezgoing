@@ -1,0 +1,14 @@
+#!/usr/bin/env node
+var debug = require('debug')('eg');
+var app = require('../app');
+
+if(app.get('env') === 'development') {
+    app.set('port', process.env.PORT || 3000);
+} else {
+    app.set('port', process.env.VCAP_APP_PORT || 80);
+}
+
+
+var server = app.listen(app.get('port'), function() {
+    debug('Express server listening on port ' + server.address().port);
+});

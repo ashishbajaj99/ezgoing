@@ -1,0 +1,71 @@
+body {
+    background: black;
+}
+
+svg {
+   top: 0 !important;
+   left: 0 !important;
+   position: absolute !important;
+}
+
+#canvas {
+    position: relative;
+    height: 590px;
+    border: solid 1px #222;
+    background: #222;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+#loading {
+    position: relative;
+    width: 569px;
+    height: 40px;
+    top: 50%;
+    left: 50%;
+}
+
+#saving {
+    position: relative;
+    width: 150px;
+    top: 50%;
+    left: 70%;
+}
+
+.modal-header {
+    background: #555;
+    color: white;
+}
+
+.modal-body {
+    /*background: #222;*/
+}
+.modal-footer {
+    background: #555;
+}
+#cpanel {
+    position: relative;
+    margin-top: 7px;
+}
+#load1 {
+    position: relative;
+}
+#load2 {
+    position: relative;
+}
+
+#map {
+    position: relative;
+    top: 10px;
+    height: 600px;
+}
+.infoWindowContent {
+    font-size:  14px !important;
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+}
+/*h2 {
+    margin-bottom:0;
+    margin-top: 0;
+}*/

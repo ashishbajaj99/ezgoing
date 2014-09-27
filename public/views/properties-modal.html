@@ -1,0 +1,57 @@
+<!-- Properties Modal -->
+<div class="modal fade" id="properties-modal" tabindex="-1" role="dialog" aria-labelledby="properties-modal-label" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <!-- <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button> -->
+        <h4 class="modal-title" id="properties-modal-label">{{ propCoreName }}</h4>
+      </div>
+
+      <section>
+        <ul class="nav nav-tabs" role="tablist">
+          <li ng-class="{ active:isTabSelected(1) }"> <a href ng-click="selectTab(1)">Description</a> </li>
+          <li ng-class="{ active:isTabSelected(2) }"> <a href ng-click="selectTab(2)">Specifications</a> </li>
+        </ul>
+
+        <div ng-show="isTabSelected(1)">
+          <div class="modal-body">
+            <table class="table table-hover">
+              <tr ng-repeat="key in getKeys(propModalData)">
+                <td> <strong>{{ key }}</strong> </td>
+                <td> 
+                  <span ng-hide="editableFlags[key]" ng-click="editItem(key)">{{ propModalData[key] }}</span>
+                  <input ng-show="editableFlags[key]" ng-model="propModalData[key]" ng-blur="doneEditing(key)" autofocus />
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <div id="saving" my-spinner color="white">
+              <div loader start-signal="saving" success-signal="savingSuccess" error-signal="savingFailure" error-msg="Check Connection">
+              </div>
+            </div>
+            <button type="button" class="btn btn-default" ng-disabled="disableClose" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-default" ng-click="saveToServer()">Save</button>
+          </div>
+        </div>
+
+        <div ng-show="isTabSelected(2)">
+          <div class="modal-body">
+            <p>This is a test</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" ng-disabled="disableClose" data-dismiss="modal">Close</button>
+          </div>
+        </div>          
+
+
+
+      </section>
+
+
+    </div>
+  </div>
+</div>
+
+<div ng-transclude></div>

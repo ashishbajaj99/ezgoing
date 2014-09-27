@@ -1,0 +1,2 @@
+Need to move fetchGeoPositionData() into dataManager - will need to handle this with a promise /$q service
+Manage type of transportation based on weather local
