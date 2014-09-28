@@ -138,7 +138,7 @@
                         var j=0;
                         for(var origin in originsObj) {
                             if(j == minIndex) {
-                                console.log('closestDriver ' + originsObj[origin].name);
+                                // console.log('closestDriver ' + originsObj[origin].name);
                                 $scope.launchModal('Closest Driver', {
                                     'ETA': durationMsg[minIndex],
                                     'Distance': distanceMsg[minIndex],
