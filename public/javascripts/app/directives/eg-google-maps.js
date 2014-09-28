@@ -94,16 +94,16 @@
                         avoidHighways: false,
                         avoidTolls: false
                       }, closestDriver);
-                    console.log(
-                      {
-                        origins: originsArr,
-                        destinations: [currPosition],
-                        travelMode: google.maps.TravelMode.DRIVING,
-                        unitSystem: google.maps.UnitSystem.METRIC,
-                        durationInTraffic: true,
-                        avoidHighways: false,
-                        avoidTolls: false
-                      });
+                    // console.log(
+                    //   {
+                    //     origins: originsArr,
+                    //     destinations: [currPosition],
+                    //     travelMode: google.maps.TravelMode.DRIVING,
+                    //     unitSystem: google.maps.UnitSystem.METRIC,
+                    //     durationInTraffic: true,
+                    //     avoidHighways: false,
+                    //     avoidTolls: false
+                    //   });
                 }
 
                 var closestDriver = function(response, status) {

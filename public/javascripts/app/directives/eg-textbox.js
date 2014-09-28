@@ -9,7 +9,7 @@
             controller: [ '$scope', '$attrs', 'egDataFactory', function($scope, $attrs, egDataFactory) {
                 $scope.userId = '';
                 $scope.findMe = function() {
-                    console.log($scope.userId);
+                    // console.log($scope.userId);
                     egDataFactory.fetchViewData('users', $scope.userId);
                 }
                 $scope.pickMeUp = function() {
