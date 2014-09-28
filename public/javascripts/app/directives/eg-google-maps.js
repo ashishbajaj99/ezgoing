@@ -7,10 +7,18 @@
         return {
             restrict: 'E',
             scope: true,
-            templateUrl: '../../../views/map.html',      
+            templateUrl: '../../../views/map.html',
+            require: '^egPropModal',
+            link: function(scope, element, attr, modalCtrl) {
+                scope.setModalData = modalCtrl.setModalData;
+                scope.launchModal = modalCtrl.launchModal;
+            },                
             controller: [ '$scope', '$location', 'egDataFactory', function($scope, $location, egDataFactory) {
+                Array.min = function( array ){
+                  return Math.min.apply( Math, array );
+                };
                 var map, marker=[], currPosition;
-                var userId = 'bajaj.ashish@gmail.com';
+                var originsObj;
                 var toggleBounce = function() {
                     if(marker.getAnimation() != null) {
                         marker.setAnimation(null);
@@ -38,7 +46,6 @@
                         draggable: true
                     });
                     $scope.map = map;
-                    egDataFactory.fetchAvailTsp(info.position.latitude, info.position.longitude);
                     // google.maps.event.addListener(marker, 'click', toggleBounce);
                 }
 
@@ -71,7 +78,7 @@
                 var createDistanceMatrixRequest = function() {
                     //currPosition = destination
 
-                    var originsObj = egDataFactory.getViewData();
+                    originsObj = egDataFactory.getViewData();
                     var originsArr = [];
                     for(var origin in originsObj) {
                         originsArr.push(new google.maps.LatLng(originsObj[origin].position.latitude, originsObj[origin].position.longitude));
@@ -101,6 +108,9 @@
 
                 var closestDriver = function(response, status) {
                     if (status == google.maps.DistanceMatrixStatus.OK) {
+                        var durations = [];
+                        var durationMsg = [];
+                        var distanceMsg = [];
                         var origins = response.originAddresses;
                         var destinations = response.destinationAddresses;
 
@@ -108,13 +118,37 @@
                             var results = response.rows[i].elements;
                             for (var j = 0; j < results.length; j++) {
                                 var element = results[j];
-                                var distance = element.distance.text;
-                                var duration = element.duration.text;
+                                var distance = element.distance.value;
+                                var duration = element.duration.value;
                                 var from = origins[i];
                                 var to = destinations[j];
-                                console.log(duration);
+                                // console.log(duration);
+                                durations.push(duration);
+                                durationMsg.push(element.duration.text);
+                                distanceMsg.push(element.distance.text);
                             }
                         }
+                        var minDuration = durations[0], minIndex = 0;
+                        for(var i=0;i<durations.length;i++) {
+                            if(durations[i] < minDuration) {
+                                minDuration = durations[i];
+                                minIndex = i;
+                            }
+                        }
+                        var j=0;
+                        for(var origin in originsObj) {
+                            if(j == minIndex) {
+                                console.log('closestDriver ' + originsObj[origin].name);
+                                $scope.launchModal('Closest Driver', {
+                                    'ETA': durationMsg[minIndex],
+                                    'Distance': distanceMsg[minIndex],
+                                    'Driver Name': originsObj[origin].name,
+                                    'Phone': originsObj[origin].phone,
+                                    'Car Number':  originsObj[origin].car
+                                }, false);
+                            }
+                            j++;
+                        }          
                     }
                 }
 

@@ -10,11 +10,11 @@
 
       <section>
         <ul class="nav nav-tabs" role="tablist">
-          <li ng-class="{ active:isTabSelected(1) }"> <a href ng-click="selectTab(1)">Description</a> </li>
-          <li ng-class="{ active:isTabSelected(2) }"> <a href ng-click="selectTab(2)">Specifications</a> </li>
+          <!-- <li ng-class="{ active:isTabSelected(1) }"> <a href ng-click="selectTab(1)">Description</a> </li> -->
+          <li ng-class="{ active:isTabSelected(2) }"> <a href ng-click="selectTab(2)">Pick Up Details</a> </li>
         </ul>
 
-        <div ng-show="isTabSelected(1)">
+<!--         <div ng-show="isTabSelected(1)">
           <div class="modal-body">
             <table class="table table-hover">
               <tr ng-repeat="key in getKeys(propModalData)">
@@ -35,10 +35,18 @@
             <button type="button" class="btn btn-default" ng-click="saveToServer()">Save</button>
           </div>
         </div>
-
+ -->
         <div ng-show="isTabSelected(2)">
           <div class="modal-body">
-            <p>This is a test</p>
+             <table class="table table-hover">
+              <tr ng-repeat="key in getKeys(propModalData)">
+                <td> <strong>{{ key }}</strong> </td>
+                <td> 
+                  <span ng-hide="editableFlags[key]" ng-click="editItem(key)">{{ propModalData[key] }}</span>
+                  <input ng-show="editableFlags[key]" ng-model="propModalData[key]" ng-blur="doneEditing(key)" autofocus />
+                </td>
+              </tr>
+            </table>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" ng-disabled="disableClose" data-dismiss="modal">Close</button>

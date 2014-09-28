@@ -13,7 +13,7 @@
             },
             controller: ['$scope', 'egDataFactory', function($scope, egDataFactory) {
                 var isEditable;
-                var activeTabId = 1;
+                var activeTabId = 2;
                 $scope.propModalData = {};
                 $scope.propCoreName = '';
                 $scope.editableFlags = {};
