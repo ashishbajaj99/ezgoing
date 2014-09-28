@@ -1,5 +1,5 @@
 (function() {
-    var egDataManager = angular.module('egDataManager', []);
+    var egDataManager = angular.module('EgDataManager', []);
 
     egDataManager.factory('egDataFactory', ['$rootScope', '$http', function($rootScope, $http) {
         var egDataFactory = {};
@@ -20,6 +20,21 @@
                     data = [];
                     $rootScope.$broadcast('loadingFailure');
                 });  
+        }
+
+        egDataFactory.fetchAdminData = function(viewName) {
+            var url = defaultUrl+viewName;
+            
+            $rootScope.$broadcast('loading');
+            $http.get(url)
+                .success(function(response) {
+                    data = response;
+                    $rootScope.$broadcast('adminLoadingSuccess');
+                })
+                .error(function(response) {
+                    data = [];
+                    $rootScope.$broadcast('adminLoadingFailure');
+                });
         }
 
         egDataFactory.updatePosition = function(viewName, userId) {

@@ -1,5 +1,5 @@
 (function() {
-    var egNavbar = angular.module('egNavbar', ['egDataManager']);
+    var egNavbar = angular.module('egNavbar', ['EgDataManager']);
 
     egNavbar.directive('egNavbar', function() {
         var navbarLinks = [

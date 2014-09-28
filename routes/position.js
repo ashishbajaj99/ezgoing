@@ -46,7 +46,10 @@ var adminDb = {
 router.get('/', function(req, res) {
     // Needs to come from database
     var response;
-    response = adminDb[req.query.type][req.query.userId];
+    if(req.query.userId)
+        response = adminDb[req.query.type][req.query.userId];
+    else
+        response = adminDb[req.query.type];
 
     console.log('Route:', JSON.stringify(req.route));
     console.log('Params:', JSON.stringify(req.params));

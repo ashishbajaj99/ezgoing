@@ -1,5 +1,5 @@
 (function() {
-    var egModal = angular.module('egModal',['egDataManager']);
+    var egModal = angular.module('egModal',['EgDataManager']);
 
     egModal.directive('egPropModal', function() {
         return {

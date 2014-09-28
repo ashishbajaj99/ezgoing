@@ -1,5 +1,5 @@
 (function() {
-    var googleMaps = angular.module('EgGoogleMaps', ['egDataManager']);
+    var googleMaps = angular.module('EgGoogleMaps', ['EgDataManager']);
 
     googleMaps.directive('egGoogleMaps', function() {
         
@@ -8,8 +8,8 @@
             restrict: 'E',
             scope: true,
             templateUrl: '../../../views/map.html',      
-            controller: [ '$scope', 'egDataFactory', function($scope, egDataFactory) {
-                var map, marker;
+            controller: [ '$scope', '$location', 'egDataFactory', function($scope, $location, egDataFactory) {
+                var map, marker=[];
                 var userId = 'bajaj.ashish@gmail.com';
                 var toggleBounce = function() {
                     if(marker.getAnimation() != null) {
@@ -24,7 +24,7 @@
 
                     var currPosition = new google.maps.LatLng(info.position.latitude, info.position.longitude);
                     var mapOptions = {
-                        zoom: 16,
+                        zoom: 15,
                         center: currPosition,
                         mapTypeId: google.maps.MapTypeId.ROADMAP,
                         animation: google.maps.Animation.DROP,
@@ -34,16 +34,45 @@
                     marker = new google.maps.Marker({
                         position: currPosition,
                         map: map,
-                        title:'Hello ' + info.name
+                        title:'Hello ' + info.name,
+                        draggable: true
                     });
                     $scope.map = map;
                     // google.maps.event.addListener(marker, 'click', toggleBounce);
                 }
 
+                var showAllTsp = function() {
+                    var info = (egDataFactory.getViewData());
+                    var city = new google.maps.LatLng(17.438382, 78.348220);
+                    var mapOptions = {
+                        zoom: 14,
+                        center: city,
+                        mapTypeId: google.maps.MapTypeId.ROADMAP,
+                        animation: google.maps.Animation.DROP,
+                        draggable: true
+                    }
+                    map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+                    for (var tsp in info) {
+                        var currPosition = new google.maps.LatLng(info[tsp].position.latitude, info[tsp].position.longitude);
+                        marker.push(new google.maps.Marker({
+                            position: currPosition,
+                            map: map,
+                            title:'Hello ' + info[tsp].name,
+                            draggable: true
+                        }));
+                    }
+
+                    $scope.map = map;
+                    // google.maps.event.addListener(marker, 'click', toggleBounce);
+                }
+                var admin = $location.$$absUrl.split('/');
+                if(admin[admin.length-1] === 'admin.html') {
+                    egDataFactory.fetchAdminData('tsp');
+                }
+
                 $scope.$on('loadingSuccess', showUserPosition);
-
-                egDataFactory.fetchViewData('users', 'bajaj.ashish@gmail.com');
-
+                $scope.$on('adminLoadingSuccess', showAllTsp);
                 // getLocation();
 
                 /*
