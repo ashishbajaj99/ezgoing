@@ -22,6 +22,21 @@
                 });  
         }
 
+        egDataFactory.fetchAvailTsp = function() {
+            var url = defaultUrl+'tsp';
+            
+            $rootScope.$broadcast('loading');
+            $http.get(url)
+                .success(function(response) {
+                    data = response;
+                    $rootScope.$broadcast('userAndTspDataAvailable');
+                })
+                .error(function(response) {
+                    data = [];
+                    $rootScope.$broadcast('loadingFailure');
+                });
+        }
+
         egDataFactory.fetchAdminData = function(viewName) {
             var url = defaultUrl+viewName;
             

@@ -9,7 +9,7 @@
             scope: true,
             templateUrl: '../../../views/map.html',      
             controller: [ '$scope', '$location', 'egDataFactory', function($scope, $location, egDataFactory) {
-                var map, marker=[];
+                var map, marker=[], currPosition;
                 var userId = 'bajaj.ashish@gmail.com';
                 var toggleBounce = function() {
                     if(marker.getAnimation() != null) {
@@ -22,7 +22,7 @@
                 var showUserPosition = function() {
                     var info = (egDataFactory.getViewData());
 
-                    var currPosition = new google.maps.LatLng(info.position.latitude, info.position.longitude);
+                    currPosition = new google.maps.LatLng(info.position.latitude, info.position.longitude);
                     var mapOptions = {
                         zoom: 15,
                         center: currPosition,
@@ -38,6 +38,7 @@
                         draggable: true
                     });
                     $scope.map = map;
+                    egDataFactory.fetchAvailTsp(info.position.latitude, info.position.longitude);
                     // google.maps.event.addListener(marker, 'click', toggleBounce);
                 }
 
@@ -54,9 +55,9 @@
                     map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
                     for (var tsp in info) {
-                        var currPosition = new google.maps.LatLng(info[tsp].position.latitude, info[tsp].position.longitude);
+                        var tspPos = new google.maps.LatLng(info[tsp].position.latitude, info[tsp].position.longitude);
                         marker.push(new google.maps.Marker({
-                            position: currPosition,
+                            position: tspPos,
                             map: map,
                             title:'Hello ' + info[tsp].name,
                             draggable: true
@@ -66,11 +67,63 @@
                     $scope.map = map;
                     // google.maps.event.addListener(marker, 'click', toggleBounce);
                 }
+
+                var createDistanceMatrixRequest = function() {
+                    //currPosition = destination
+
+                    var originsObj = egDataFactory.getViewData();
+                    var originsArr = [];
+                    for(var origin in originsObj) {
+                        originsArr.push(new google.maps.LatLng(originsObj[origin].position.latitude, originsObj[origin].position.longitude));
+                    }
+                    var service = new google.maps.DistanceMatrixService();
+                    service.getDistanceMatrix(
+                      {
+                        origins: originsArr,
+                        destinations: [currPosition],
+                        travelMode: google.maps.TravelMode.DRIVING,
+                        unitSystem: google.maps.UnitSystem.METRIC,
+                        durationInTraffic: true,
+                        avoidHighways: false,
+                        avoidTolls: false
+                      }, closestDriver);
+                    console.log(
+                      {
+                        origins: originsArr,
+                        destinations: [currPosition],
+                        travelMode: google.maps.TravelMode.DRIVING,
+                        unitSystem: google.maps.UnitSystem.METRIC,
+                        durationInTraffic: true,
+                        avoidHighways: false,
+                        avoidTolls: false
+                      });
+                }
+
+                var closestDriver = function(response, status) {
+                    if (status == google.maps.DistanceMatrixStatus.OK) {
+                        var origins = response.originAddresses;
+                        var destinations = response.destinationAddresses;
+
+                        for (var i = 0; i < origins.length; i++) {
+                            var results = response.rows[i].elements;
+                            for (var j = 0; j < results.length; j++) {
+                                var element = results[j];
+                                var distance = element.distance.text;
+                                var duration = element.duration.text;
+                                var from = origins[i];
+                                var to = destinations[j];
+                                console.log(duration);
+                            }
+                        }
+                    }
+                }
+
                 var admin = $location.$$absUrl.split('/');
                 if(admin[admin.length-1] === 'admin.html') {
                     egDataFactory.fetchAdminData('tsp');
                 }
 
+                $scope.$on('userAndTspDataAvailable', createDistanceMatrixRequest);
                 $scope.$on('loadingSuccess', showUserPosition);
                 $scope.$on('adminLoadingSuccess', showAllTsp);
                 // getLocation();

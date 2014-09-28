@@ -13,7 +13,7 @@
                     egDataFactory.fetchViewData('users', $scope.userId);
                 }
                 $scope.pickMeUp = function() {
-                    console.log('working...');
+                    // egDataFactory.calculateDistances('')
                 }
                 //Manage fetch button, request pickup, username text
             }]
