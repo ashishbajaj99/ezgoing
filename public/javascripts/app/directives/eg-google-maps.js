@@ -1,5 +1,5 @@
 (function() {
-    var googleMaps = angular.module('EgGoogleMaps', []);
+    var googleMaps = angular.module('EgGoogleMaps', ['egDataManager']);
 
     googleMaps.directive('egGoogleMaps', function() {
         
@@ -8,8 +8,9 @@
             restrict: 'E',
             scope: true,
             templateUrl: '../../../views/map.html',      
-            controller: [ '$rootScope', '$scope', function($rootScope, $scope) {
+            controller: [ '$scope', 'egDataFactory', function($scope, egDataFactory) {
                 var map, marker;
+                var userId = 'bajaj.ashish@gmail.com';
                 var toggleBounce = function() {
                     if(marker.getAnimation() != null) {
                         marker.setAnimation(null);
@@ -18,9 +19,10 @@
                     }
                 }
 
-                var showPosition = function(position) {
-                    // var currPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-                    var currPosition = new google.maps.LatLng(17.434940, 78.341380);
+                var showUserPosition = function() {
+                    var info = (egDataFactory.getViewData());
+
+                    var currPosition = new google.maps.LatLng(info.position.latitude, info.position.longitude);
                     var mapOptions = {
                         zoom: 16,
                         center: currPosition,
@@ -32,24 +34,17 @@
                     marker = new google.maps.Marker({
                         position: currPosition,
                         map: map,
-                        title:'Hello Ashish!'
+                        title:'Hello ' + info.name
                     });
                     $scope.map = map;
-                    console.log('Fetch successful');
-                    google.maps.event.addListener(marker, 'click', toggleBounce);
-                    // $rootScope.$broadcast('geolocationSuccess');
+                    // google.maps.event.addListener(marker, 'click', toggleBounce);
                 }
 
-                var getLocation = function() {
-                    if(navigator.geolocation) {
-                        console.log('Fetching Position...');
-                        navigator.geolocation.getCurrentPosition(showPosition);
-                    } else {
-                        $rootScope.$broadcast('geolocationError');
-                    }
-                }
-                
-                getLocation();
+                $scope.$on('loadingSuccess', showUserPosition);
+
+                egDataFactory.fetchViewData('users', 'bajaj.ashish@gmail.com');
+
+                // getLocation();
 
                 /*
                     $scope.markers = [];
@@ -60,7 +55,7 @@
                         
                         var marker = new google.maps.Marker({
                             map: $scope.map,
-                            position: new google.maps.LatLng(info.lat, info.long),
+                            info: new google.maps.LatLng(info.lat, info.long),
                             title: info.city
                         });
                         marker.content = '<div class="infoWindowContent">' + info.desc + '</div>';

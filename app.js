@@ -5,7 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var platforms = require('./routes/platforms');
+var position = require('./routes/position');
 var users = require('./routes/users');
 var testRun = require('./routes/test-run');
 
@@ -28,7 +28,7 @@ app.use(cookieParser());
 /// handle all routes, first static and then dynamic
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/users', users);
-app.use('/platforms', platforms);
+app.use('/position', position);
 app.use('/test-run', testRun);
 
 /// catch 404 and forward to error handler

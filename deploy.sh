@@ -25,12 +25,11 @@ case "$1" in
         else
             git add --all
             git commit -m "$2"
-            git push origin master
+            # git push origin master
         fi  
         ;;
     'deploy')
-        stackato target https://api.runq.qualcomm.com
-        stackato push -n
+        git push heroku master
         ;;
     'all')
        echo 'Cleaning all the temp files'
@@ -43,10 +42,8 @@ case "$1" in
         else
             git add --all
             git commit -m "$2"
-            git push origin master
         fi  
-        stackato target https://api.runq.qualcomm.com
-        stackato push -n
+        git push heroku master
         ;;
     *)
         echo 'I couldnt understand your request'
