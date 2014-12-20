@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html ng-app="eg">
+  <head>
+    <!-- First Load Stylesheets to ensure container sizes are always pre-loaded -->
+    <link rel="shortcut icon" type="image/png" href="images/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/vendor/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/app/style.css" media="screen" />
+    <title>EzGoing | Helping People Collaborate | Hyderabad Metro Rail Connections</title>
+  </head>
+
+  <body>
+    <div id="canvas">
+    	<eg-video-chat></eg-video-vhat>
+    </div>
+
+    <!-- Vendor Libs -->
+    <!-- NOTE: Always load jquery before angular if we want jqlite to be replaced by jquery instead -->
+    <script type="text/javascript" src="javascripts/vendor/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="javascripts/vendor/angular-1.2.21.min.js"></script>
+    <script type="text/javascript" src="javascripts/vendor/bootstrap.min.js"></script>
+    <script type="text/javascript" src="javascripts/vendor/raphael.js"></script>
+    <script type="text/javascript" src="http://simplewebrtc.com/latest.js"></script>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=&sensor=false&extension=.js"></script>
+
+    <!-- App Libs -->
+    <script type="text/javascript" src="javascripts/app/directives/spinner.js"></script>
+    <script type="text/javascript" src="javascripts/app/directives/loader.js"></script>    
+    <script type="text/javascript" src="javascripts/app/directives/eg-navbar.js"></script>    
+    <script type="text/javascript" src="javascripts/app/directives/eg-textbox.js"></script>        
+    <script type="text/javascript" src="javascripts/app/directives/eg-prop-modal.js"></script>
+    <script type="text/javascript" src="javascripts/app/directives/eg-google-maps.js"></script>
+    <script type="text/javascript" src="javascripts/app/factories/eg-data-manager.js"></script>
+    <script type="text/javascript" src="javascripts/app/app.js"></script>
+    <script type="text/javascript" src="javascripts/app/raphael-eg-extensions.js"></script>
+
+  </body>
+</html>
