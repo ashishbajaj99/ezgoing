@@ -80,6 +80,26 @@
             }
         }
 
+        egDataFactory.getIceServers = function() {
+            var url = 'https://api.xirsys.com/getIceServers';
+            var data = { ident: "ashish",
+                         secret: "2b7854f1-8965-4093-a9cf-f11a3d300659",
+                         domain: "http://www.ezgoing.in",
+                         application: "default",
+                         room: "default",
+                         secure: 1
+                        };
+            $http.post(url, data)
+                .success(function(response) {
+                    console.log(response);
+                    return response;
+                })
+                .error(function(response) {
+                    console.log(response);
+                    return null;
+                });
+        }
+
         return egDataFactory;
     }]);
 

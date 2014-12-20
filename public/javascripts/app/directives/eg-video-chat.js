@@ -1,12 +1,14 @@
 (function() {
-    var egVideoChat = angular.module('EgVideoChat', []);
+    var egVideoChat = angular.module('EgVideoChat', ['EgDataManager']);
 
     egVideoChat.directive('egVideoChat', function() {
         return {
             restrict: 'E',
             scope: true,
             templateUrl: '../../../views/videochat.html',      
-            controller: [ '$scope', '$attrs', function($scope, $attrs) {
+            controller: [ '$scope', '$attrs', 'egDataFactory', function($scope, $attrs, egDataFactory) {
+                var peerConnectionConfig = egDataFactory.getIceServers();
+
                 var webrtc = new SimpleWebRTC({
                                                 // the id/element dom element that will hold "our" video
                                                 localVideoEl: 'localVideo',
