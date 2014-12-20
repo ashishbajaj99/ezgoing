@@ -89,8 +89,15 @@
                          room: "default",
                          secure: 1
                         };
-            var config = { headers: {'Content-Type': 'application/x-www-form-urlencoded'} };
-            
+            var config = { headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+                           transformRequest: function(obj) {
+                                var str = [];
+                                for(var p in obj)
+                                    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                                return str.join("&");
+                            }
+                         };
+
             $http.post(url, data, config)
                 .success(function(response) {
                     console.log("Success!!!\n");
