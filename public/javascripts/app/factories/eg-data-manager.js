@@ -89,12 +89,15 @@
                          room: "default",
                          secure: 1
                         };
+
             $http.post(url, data)
                 .success(function(response) {
+                    console.log("Success!!!\n");
                     console.log(response);
                     return response;
                 })
                 .error(function(response) {
+                    console.log("Failure!!!\n");
                     console.log(response);
                     return null;
                 });
