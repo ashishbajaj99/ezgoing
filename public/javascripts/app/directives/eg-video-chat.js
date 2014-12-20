@@ -1,5 +1,5 @@
 (function() {
-    var egVideoChat = angular.module('EgVideoChat');
+    var egVideoChat = angular.module('EgVideoChat', []);
 
     egVideoChat.directive('egVideoChat', function() {
         return {
