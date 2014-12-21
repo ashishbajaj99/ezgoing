@@ -6,6 +6,7 @@
         var data = [];
         var history = [];
         var defaultUrl = '/position?type='; //default URL to load from
+        var iceServers = {};
 
         egDataFactory.fetchViewData = function(viewName, userId) {
             var url = defaultUrl+viewName+'&userId='+userId;
@@ -80,7 +81,7 @@
             }
         }
 
-        egDataFactory.getIceServers = function() {
+        egDataFactory.fetchIceServers = function() {
             var url = 'https://api.xirsys.com/getIceServers';
             var data = { ident: "ashish",
                          secret: "2b7854f1-8965-4093-a9cf-f11a3d300659",
@@ -100,15 +101,16 @@
 
             $http.post(url, data, config)
                 .success(function(response) {
-                    console.log("Success!!!\n");
-                    console.log(response);
-                    return response;
+                    iceServers = response.d;
+                    $rootScope.$broadcast('iceServersAvailable');
                 })
                 .error(function(response) {
-                    console.log("Failure!!!\n");
-                    console.log(response);
-                    return null;
+                    //do nothing
                 });
+        }
+
+        egDataFactory.getIceServers = function() {
+            return iceServers;
         }
 
         return egDataFactory;
