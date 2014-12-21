@@ -82,26 +82,11 @@
         }
 
         egDataFactory.fetchIceServers = function() {
-            var url = 'https://api.xirsys.com/getIceServers';
-            var data = { ident: "ashish",
-                         secret: "2b7854f1-8965-4093-a9cf-f11a3d300659",
-                         domain: "https://ezgoing.herokuapp.com",
-                         application: "default",
-                         room: "default",
-                         secure: 1
-                        };
-            var config = { headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
-                           transformRequest: function(obj) {
-                                var str = [];
-                                for(var p in obj)
-                                    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                                return str.join("&");
-                            }
-                         };
+            var url = '/test-run';
 
-            $http.post(url, data, config)
+            $http.get(url)
                 .success(function(response) {
-                    iceServers = response.d;
+                    iceServers = response;
                     $rootScope.$broadcast('iceServersAvailable');
                 })
                 .error(function(response) {
