@@ -1,2 +1,15 @@
-Need to move fetchGeoPositionData() into dataManager - will need to handle this with a promise /$q service
-Manage type of transportation based on weather local
+Login:
+	a. Sign In
+	b. Sign Up
+
+User Profiles Views (Personal and For others)
+Communication via chat, voice, share screen
+Payment Gateway:
+	a. Payfirma, Stripe, PayPal, Beanstream, BluePay, authorize.net
+Payment Settlements
+
+To discuss with UK Folks:
+	a. Two Directors - I will be travelling to UK on the 9th of Jan, my cousin is not travelling with me
+	b. How to setup a bank account - how about authorized signatures?
+	c. Since this is an e-commerce company - how about the MOA, and payment gateway setup, etc.?
+	d. Required Documentation from Directors
