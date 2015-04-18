@@ -6,7 +6,7 @@ eg - EzGoing is NodeJS/ExpressJS application demo. I am using this demo to show 
 Home
 ===
 
-To reach eg you can visit [http://ezgoing.co.in](http://ezgoing.co.in "eg Home")
+To reach eg you can visit [http://ezgoing.in](http://ezgoing.in "eg Home")
 
 Deployment
 ===
