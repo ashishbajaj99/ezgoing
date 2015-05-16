@@ -11,7 +11,7 @@ var testRun = require('./routes/test-run');
 
 var app = express();
 
-// environment setup
+// environment setup to handle large nested console depth
 app.set('env', process.argv[2]);
 console.depth = 7;
 
